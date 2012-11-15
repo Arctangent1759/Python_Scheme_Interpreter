@@ -132,7 +132,9 @@ class Frame(object):
         <{a: 1, b: 2, c: 3} -> <Global Frame>>
         """
         frame = Frame(self)
-        "*** YOUR CODE HERE ***"
+        assert len(formals)==len(vals),'Parameter lengths do not match.'
+        for i in range(len(formals)):
+            frame.bindings[formals[i]]=vals[i]
         return frame
 
     def define(self, sym, val):
