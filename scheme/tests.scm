@@ -102,7 +102,7 @@ circumference
 (f 5)
 ; expect 136
 
-(exit)
+;(exit) UNCOMMENT LATER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ;;; 1.1.6
 
@@ -563,8 +563,17 @@ one-through-four
 ;; Merge two lists LIST1 and LIST2 and returns
 ;; the merged lists.
 (define (merge list1 list2)
-    ; *** YOUR CODE HERE ***
-    nil)
+    (cond
+        ((eq? list1 nil) list2)
+        ((eq? list2 nil) list1)
+        ((>= (car list1) (car list2)) 
+            (cons (car list2) (merge list1 (cdr list2)))
+        )
+        (else 
+            (cons (car list1) (merge (cdr list1) list2))
+        )
+    )
+)
 
 (merge '(1 5 7 9) '(4 8 10))
 ; expect (1 4 5 7 8 9 10)
@@ -574,8 +583,12 @@ one-through-four
 ;; The number of ways to change TOTAL with DENOMS
 ;; At most MAX-COINS total coins can be used.
 (define (count-change total denoms max-coins)
-  ; *** YOUR CODE HERE ***
-  nil)
+    (cond
+        ((or (eq? denoms nil) (< total 0) (< max-coins 0)) 0)
+        ((= total 0) 1)
+        (else (+ (count-change (- total (car denoms)) denoms (- max-coins 1)) (count-change total (cdr denoms) max-coins)))
+    )
+)
 
 (define us-coins '(50 25 10 5 1))
 (count-change 20 us-coins 18)
