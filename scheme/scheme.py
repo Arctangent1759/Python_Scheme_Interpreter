@@ -82,7 +82,7 @@ def apply_primitive(procedure, args, env):
     try:
         return procedure.fn(*pyargs)
     except TypeError:
-        raise SchemeError()
+        raise SchemeError()#TODO: Add an informative error message.
     
 ################
 # Environments #
@@ -111,7 +111,7 @@ class Frame(object):
             if self.parent:#Otherwise, if the frame has a parent, lookup in the parent.
                 return self.parent.lookup(symbol)
             else:#Otherwise, the frame is the global frame, and the symbol cannt be found. Raise an error.
-                raise SchemeError()
+                raise SchemeError() #TODO: Add an informative error message.
         raise SchemeError("unknown identifier: {0}".format(str(symbol)))
 
     def global_frame(self):
@@ -212,7 +212,7 @@ def do_define_form(vals, env):
     target = vals[0]
     if scheme_symbolp(target):
         check_form(vals, 2, 2)
-        "*** YOUR CODE HERE ***"
+        env.bindings[target]=scheme_eval(vals[1],env)
     elif isinstance(target, Pair):
         "*** YOUR CODE HERE ***"
     else:
