@@ -219,7 +219,8 @@ def do_define_form(vals, env):
         check_form(vals, 2, 2)
         env.bindings[target]=scheme_eval(vals[1],env)
     elif isinstance(target, Pair):
-        "*** YOUR CODE HERE ***"
+        equiv_lambda=Pair("lambda",Pair(target.second,vals.second))
+        do_define_form(Pair(target[0],Pair(equiv_lambda,nil)),env)
     else:
         raise SchemeError("bad argument to define")
 
