@@ -57,7 +57,7 @@ def scheme_apply(procedure, args, env):
     if isinstance(procedure, PrimitiveProcedure):
         return apply_primitive(procedure, args, env)
     elif isinstance(procedure, LambdaProcedure):
-        "*** YOUR CODE HERE ***"
+        return scheme_eval(procedure.body,procedure.env.make_call_frame(procedure.formals,args))
     elif isinstance(procedure, MuProcedure):
         "*** YOUR CODE HERE ***"
     else:
@@ -82,7 +82,7 @@ def apply_primitive(procedure, args, env):
     try:
         return procedure.fn(*pyargs)
     except TypeError:
-        raise SchemeError()#TODO: Add an informative error message.
+        raise SchemeError('TypeError encountered in apply_primitive.')#TODO: Add an informative error message.
     
 ################
 # Environments #
@@ -111,7 +111,7 @@ class Frame(object):
             if self.parent:#Otherwise, if the frame has a parent, lookup in the parent.
                 return self.parent.lookup(symbol)
             else:#Otherwise, the frame is the global frame, and the symbol cannt be found. Raise an error.
-                raise SchemeError() #TODO: Add an informative error message.
+                raise SchemeError('Cannot find symbol '+str(symbol)) #TODO: Add an informative error message.
         raise SchemeError("unknown identifier: {0}".format(str(symbol)))
 
     def global_frame(self):
@@ -132,7 +132,7 @@ class Frame(object):
         <{a: 1, b: 2, c: 3} -> <Global Frame>>
         """
         frame = Frame(self)
-        assert len(formals)==len(vals),'Parameter lengths do not match.'
+        assert len(formals)==len(vals),'Parameter lengths do not match.'#TODO: Remove when #11B is complete.
         for i in range(len(formals)):
             frame.bindings[formals[i]]=vals[i]
         return frame
