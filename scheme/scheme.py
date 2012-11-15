@@ -72,8 +72,18 @@ def apply_primitive(procedure, args, env):
     >>> apply_primitive(plus, twos, env)
     4
     """
-    "*** YOUR CODE HERE ***"
-
+    curr=args
+    pyargs=[]
+    while curr != nil:
+        pyargs.append(curr.first)
+        curr=curr.second
+    if procedure.use_env:
+        pyargs.append(env)
+    try:
+        return procedure.fn(*pyargs)
+    except TypeError:
+        raise SchemeError()
+    
 ################
 # Environments #
 ################
@@ -95,7 +105,13 @@ class Frame(object):
 
     def lookup(self, symbol):
         """Return the value bound to SYMBOL.  Errors if SYMBOL is not found."""
-        "*** YOUR CODE HERE ***"
+        if symbol in self.bindings.keys(): #If the symbol can be found in the current frame, return its value.
+            return self.bindings[symbol]
+        else:
+            if self.parent:#Otherwise, if the frame has a parent, lookup in the parent.
+                return self.parent.lookup(symbol)
+            else:#Otherwise, the frame is the global frame, and the symbol cannt be found. Raise an error.
+                raise SchemeError()
         raise SchemeError("unknown identifier: {0}".format(str(symbol)))
 
     def global_frame(self):
