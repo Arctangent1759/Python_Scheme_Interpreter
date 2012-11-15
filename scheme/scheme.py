@@ -270,7 +270,7 @@ def do_or_form(vals, env):
     """Evaluate short-circuited or with parameters VALS in environment ENV."""
     "*** YOUR CODE HERE ***"
 
-def do_cond_form(vals, env):
+def do_cond_form(vals, env):#TODO: Check after implementation of quotation evaulation
     """Evaluate cond form with parameters VALS in environment ENV."""
     num_clauses = len(vals)
     for i, clause in enumerate(vals):
@@ -284,7 +284,12 @@ def do_cond_form(vals, env):
         else:
             test = scheme_eval(clause.first, env)
         if scheme_true(test):
-            "*** YOUR CODE HERE ***"
+            if len(clause)>2:#Refactor into the begin form if there aremore than 2 expressions
+                return scheme_eval(Pair('begin',clause.second),env)
+            elif len(clause)==2:#valutate normally if there is one expression
+                return scheme_eval(clause[1],env)
+            else:#Otherwise, there are no result values. Return True.
+                return True
 
 def do_begin_form(vals, env):
     """Evaluate begin form with parameters VALS in environment ENV."""
