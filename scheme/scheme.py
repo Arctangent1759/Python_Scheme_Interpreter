@@ -298,7 +298,7 @@ def do_begin_form(vals, env):
     check_form(vals, 1)
     curr=vals
     while curr!=nil:
-        ret=scheme_eval(curr.first,env)
+        ret=curr.first if curr.second==nil else scheme_eval(curr.first,env)
         curr=curr.second
     return ret #TODO: Check after completion of part 6B.
 
