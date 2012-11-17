@@ -102,7 +102,6 @@ circumference
 (f 5)
 ; expect 136
 
-;(exit) UNCOMMENT LATER~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ;;; 1.1.6
 

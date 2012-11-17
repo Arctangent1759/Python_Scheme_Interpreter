@@ -51,6 +51,7 @@ def scheme_eval(expr, env):
         procedure = scheme_eval(first, env)
         args = rest.map(lambda operand: scheme_eval(operand, env))
         return scheme_apply(procedure, args, env)
+
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS in environment ENV."""
     if isinstance(procedure, PrimitiveProcedure):
@@ -261,10 +262,10 @@ def do_let_form(vals, env):
 def do_if_form(vals, env):
     """Evaluate if form with parameters VALS in environment ENV."""
     check_form(vals, 3, 3)
-    if scheme_eval(vals[0],env):
-        return scheme_eval(vals[1],env)
+    if scheme_true(scheme_eval(vals[0],env)):
+        return vals[1]
     else:
-        return scheme_eval(vals[2],env)
+        return vals[2]
 
 def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
