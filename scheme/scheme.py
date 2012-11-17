@@ -51,7 +51,6 @@ def scheme_eval(expr, env):
         procedure = scheme_eval(first, env)
         args = rest.map(lambda operand: scheme_eval(operand, env))
         return scheme_apply(procedure, args, env)
-
 def scheme_apply(procedure, args, env):
     """Apply Scheme PROCEDURE to argument values ARGS in environment ENV."""
     if isinstance(procedure, PrimitiveProcedure):
@@ -59,7 +58,7 @@ def scheme_apply(procedure, args, env):
     elif isinstance(procedure, LambdaProcedure):
         return scheme_eval(procedure.body,procedure.env.make_call_frame(procedure.formals,args))
     elif isinstance(procedure, MuProcedure):
-        "*** YOUR CODE HERE ***"
+        return scheme_eval(procedure.body,env.make_call_frame(procedure.formals,args))
     else:
         raise SchemeError("Cannot call {0}".format(str(procedure)))
 
@@ -210,7 +209,10 @@ def do_mu_form(vals):
     check_form(vals, 2)
     formals = vals[0]
     check_formals(formals)
-    "*** YOUR CODE HERE ***"
+    body=vals[1]
+    return MuProcedure(formals,body)
+
+    
 
 
 def do_define_form(vals, env):
@@ -266,11 +268,20 @@ def do_if_form(vals, env):
 
 def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
-    "*** YOUR CODE HERE ***"
+    for i in vals:
+        if scheme_eval(i,env)==0:
+            return False
+    if len(vals)==0:
+        return True
+    else:
+        return vals[len(vals)-1]    
 
 def do_or_form(vals, env):
     """Evaluate short-circuited or with parameters VALS in environment ENV."""
-    "*** YOUR CODE HERE ***"
+    for i in vals:
+        if scheme_eval(i,env)!=0:
+            return scheme_eval(i,env)
+    return False    
 
 def do_cond_form(vals, env):#TODO: Check after implementation of quotation evaulation
     """Evaluate cond form with parameters VALS in environment ENV."""
@@ -330,7 +341,19 @@ def check_formals(formals):
 
     >>> check_formals(read_line("(a b c)"))
     """
-    "*** YOUR CODE HERE ***"
+    def scheme_list_to_list(x):
+        total=[]
+        for i in x:
+            total+=[i]
+        return total
+
+    if not scheme_listp(formals):
+        raise SchemeError("Badly formed expression")
+    if len(set(scheme_list_to_list(formals)))!=len(scheme_list_to_list(formals)):
+        raise SchemeError("Parameters were repeated")
+    
+    return
+
 
 ##################
 # Tail Recursion #
