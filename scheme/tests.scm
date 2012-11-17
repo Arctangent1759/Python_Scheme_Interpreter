@@ -577,6 +577,14 @@ one-through-four
 (merge '(1 5 7 9) '(4 8 10))
 ; expect (1 4 5 7 8 9 10)
 
+
+(merge '(2 3 4) '(2 3 3 5))
+; expect (2 2 3 3 3 4 5)
+(merge '(2 3 4) '(0 1 5))
+; expect (0 1 2 3 4 5)
+(merge '() '())
+; expect ()
+
 ; Problem A19
 
 ;; The number of ways to change TOTAL with DENOMS
@@ -593,18 +601,50 @@ one-through-four
 (count-change 20 us-coins 18)
 ; expect 8
 
+(count-change 100 us-coins 100)
+; expect 292
+(count-change 0 us-coins 1)
+; expect 1
+(count-change 20 us-coins 100)
+; expect 9
 
 ; Problem B20
 
 ;; The number of ways to partition TOTAL, where
 ;; each partition must be at most MAX-VALUE
 (define (count-partitions total max-value)
-  ; *** YOUR CODE HERE ***
-  nil)
+      (define (helpy total nums)
+          (cond
+              ((or (null? nums) (< total 0))
+                  0
+              )
+              ((= total 0)
+                  1
+              )
+              (else
+                  (+ (helpy (- total (car nums)) nums) (helpy total (cdr nums)))
+              )
+          )
+      )
+      (define (range lb ub)
+          (if (or (= lb ub) (> lb max-value))
+              nil
+              (cons lb (range (+ lb 1) ub))
+          )
+      )
+      (helpy total (range 1 (+ total 1)))
+  )
 
 (count-partitions 5 3)
 ; expect 5
 ; Note: The 5 partitions are [[3 2] [3 1 1] [2 2 1] [2 1 1 1] [1 1 1 1 1]]
+
+(count-partitions 63 4)
+; expect 2178
+(count-partitions 100 3)
+; expect 884
+(count-partitions 10 10)
+; expect 42
 
 ; Problem 21
 
@@ -618,6 +658,41 @@ one-through-four
 ; expect ((4 1) (3 2))
 (list-partitions 7 3 5)
 ; expect ((5 1 1) (4 2 1) (3 3 1) (3 2 2) (5 2) (4 3))
+
+;; returns true if two lists of lists contains the same elements
+(define (compare-lists list1 list2)
+  (define (equal-list? list1 list2)
+      (cond ((and (null? list1)
+        (null? list2)) #t)
+         ((or (null? list1)
+                 (null? list2)) #f)
+            (else (and (eq? (car list1)
+                 (car list2))
+                   (equal-list? (cdr list1)
+                         (cdr list2))))))
+    (define (remove-item list item)
+        (cond ((null? list) nil)
+           ((equal-list? (car list) item)
+               (cdr list))
+              (else (cons (car list)
+                      (remove-item (cdr list) item)))))
+      (cond ((eq? list1 list2) #t)
+       ((and (null? list1)
+              (null? list2)) #t)
+        ((or (null? list1)
+              (null? list2)) #f)
+         (else (compare-lists (cdr list1)
+                 (remove-item list2
+                        (car list1))))))
+
+(compare-lists (list-partitions 5 2 4)
+        '((4 1) (3 2)))
+; expect True
+(compare-lists (list-partitions 7 3 5)
+        '((5 1 1) (4 2 1) (3 3 1) (3 2 2) (5 2) (4 3)))
+; expect True
+(compare-lists (list-partitions 10 10 10) '((10) (9 1) (8 2) (7 3) (6 4) (5 5) (4 4 2) (4 3 3) (5 3 2) (5 4 1) (6 2 2) (6 3 1) (7 2 1) (8 1 1) (7 1 1 1) (6 2 1 1) (6 1 1 1 1) (5 3 1 1) (5 2 2 1) (5 2 1 1 1) (5 1 1 1 1 1) (4 4 1 1)  (4 3 2 1) (4 3 1 1 1) (4 2 2 2) (4 2 2 1 1) (4 2 1 1 1 1) (4 1 1 1 1 1 1) (3 3 3 1) (3 3 2 2) (3 3 2 1 1) (3 3 1 1 1 1) (3 2 2 2 1) (3 2 2 1 1 1) (3 2 1 1 1 1 1) (3 1 1 1 1 1 1 1) (2 2 2 2 2) (2 2 2 2 1 1) (2 2 2 1 1 1 1) (2 2 1 1 1 1 1 1) (2 1 1 1 1 1 1 1 1) (1 1 1 1 1 1 1 1 1 1)))
+; expect True
 
 ; Draw the hax image using turtle graphics.
 (define (hax n k)
