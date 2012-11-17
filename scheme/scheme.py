@@ -301,7 +301,7 @@ def do_cond_form(vals, env):#TODO: Check after implementation of quotation evaul
             if len(clause)>2:#Refactor into the begin form if there aremore than 2 expressions
                 return scheme_eval(Pair('begin',clause.second),env)
             elif len(clause)==2:#valutate normally if there is one expression
-                return scheme_eval(clause[1],env)
+                return clause[1]
             else:#Otherwise, there are no result values. Return True.
                 return True
 
