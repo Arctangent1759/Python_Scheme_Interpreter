@@ -651,8 +651,142 @@ one-through-four
 ;; A list of all ways to partition TOTAL, where  each partition must
 ;; be at most MAX-VALUE and there are at most MAX-PIECES partitions.
 (define (list-partitions total max-pieces max-value)
-  ; *** YOUR CODE HERE ***
-  nil)
+  (define (gpart_loop i max_i parts total)
+    (if (= i max_i)
+        parts
+        (begin
+            (define parts (cons (list i (- total i)) parts))
+            (define left (gpart i))
+            (define right (gpart (- total i)))
+            (define parts (gpart_loop_loop left parts (- total i)))
+            (define parts (gpart_loop_loop right parts i))
+            (gpart_loop (+ i 1) max_i parts total)
+        )
+    )
+)
+(define (gpart_loop_loop source parts partval)
+    (if (null? source)
+        parts
+        (begin
+            (define parts (cons (append (car source) (list partval)) parts))
+            (gpart_loop_loop (cdr source) parts partval)
+        )
+    )
+)
+
+(define (floordiv x y) (/(- x (remainder x y)) y))
+
+(define (gpart total)
+    (if (= total 1)
+        nil
+        (gpart_loop 1 (+ (floordiv total 2) 1) nil total)
+    )
+)
+(define (ascending s)
+        (if (null? (cdr s))
+            true
+            (and (<= (car s) (car (cdr s))) (ascending (cdr s)))
+        )
+)
+(define (sort s)
+    (begin
+        (cond
+            ((ascending s)
+                s
+            )
+            ((> (car s) (car (cdr s)))
+                (define s (cons (car (cdr s)) (sort (cons (car s) (cdr (cdr s))))))
+            )
+            (else
+                (define s (cons (car s) (sort (cdr s))))
+            )
+        )
+        (if (not (ascending s))
+            (sort s)
+            s
+        )
+    )
+)
+(define (sort_sub s)
+    (if (null? s)
+        nil
+        (cons (sort (car s)) (sort_sub (cdr s)))
+    )
+)
+(define (membership s x)
+    (cond 
+        ((null? s)
+            false
+        )
+        ((list_eq x (car s))
+            true
+        )
+        (else
+            (membership (cdr s) x)
+        )
+    )
+)    
+(define (list_eq s1 s2)
+    (if (or (null? s1) (null? s2))
+        (= (null? s1) (null? s2))
+        (and (= (car s1) (car s2)) (list_eq (cdr s1) (cdr s2)))
+    )
+)
+(define (remove_repeats s)
+    (define (helpy s out)
+        (cond 
+            ((null? s)
+                out
+            )
+            ((not (membership out (car s)))
+                (helpy (cdr s) (cons (car s) out))
+            )
+            (else
+                (helpy (cdr s) out)
+            )
+        )
+    )
+    (helpy (sort_sub s) nil)
+)
+(define (len s)
+    (if (null? s)
+        0
+        (+ 1 (len (cdr s)))
+    )
+)
+
+(define (max s)
+        (define (helpy s max)
+            (cond
+                ((null? s)
+                    max
+                )
+                ((or (null? max) (> (car s) max))
+                    (define max (car s))
+                    (helpy (cdr s) max)
+                )
+                (else
+                    (helpy (cdr s) max))
+            )
+        )
+        (helpy s nil)
+)
+(define (filter_part s max_pieces max_value)
+    (cond
+        ((null? s)
+            nil
+        )
+        ((and (<= (len (car s)) max_pieces) (<= (max (car s)) max_value))
+            (cons (car s) (filter_part (cdr s) max_pieces max_value))
+        )
+        (else
+            (filter_part (cdr s) max_pieces max_value)
+        )
+    )
+)
+(filter_part (cons (list total) (remove_repeats (gpart total))) max-pieces 
+max-value)
+)
 
 (list-partitions 5 2 4)
 ; expect ((4 1) (3 2))
