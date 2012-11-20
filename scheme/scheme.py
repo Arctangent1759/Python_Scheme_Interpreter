@@ -329,7 +329,7 @@ def do_if_form(vals, env):
 def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
     for i in vals:
-        if scheme_eval(i,env)==0:#TODO: Shouldn't this be scheme_false(scheme_eval(i,env))?
+        if scheme_false(scheme_eval(i,env)):#TODO: Shouldn't this be scheme_false(scheme_eval(i,env))?
             return False
     if len(vals)==0:
         return True
@@ -339,7 +339,7 @@ def do_and_form(vals, env):
 def do_or_form(vals, env):
     """Evaluate short-circuited or with parameters VALS in environment ENV."""
     for i in vals:
-        if scheme_eval(i,env)!=0:#TODO: Shouldn't this be scheme_false?
+        if scheme_true(scheme_eval(i,env)):#TODO: Shouldn't this be scheme_false?
             return scheme_eval(i,env)
     return False    
 
