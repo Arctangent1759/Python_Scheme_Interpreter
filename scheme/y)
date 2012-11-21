@@ -16,100 +16,12 @@
 (append (list 1 2 3 4 5) (list 6 7 8 9 10))
 ; expect (1 2 3 4 5 6 7 8 9 10)
 
-(integer? 4.3)
+ )
 ; expect False
 
+
+
 ; Problem 4
-
-(define x 5)
-(define y 6)
-(+ x y)
-; expect 11
-
-(define z x)
-x
-; expect 5
-
-; Problem 5
-
-(define x 4)
-(define aadvark 'tomato)
-(cons x (cons aadvark nil))
-; expect (4 tomato)
-
-(define a 5)
-(define b 7)
-(define c (+ a b))
-c
-; expect 12
-
-; Problem 6
-
-(list 'a 'toast 'to 'not 'being 'on 'fire.)
-; expect (a toast to not being on fire.)
-
-'(cons (+ 1 2) (- 1 (fib 7)))
-; expect (cons (+ 1 2) (- 1 (fib 7)))
-
-'(orange walrus)
-; expect (orange walrus)
-
-;Problem 7
-
-(begin 30 'hello)
-; expect hello
-
-(begin (define x 18005555555) (define y 1759) (define x (* y x)) x)
-; expect 31671772221245
-
-;Problem 8
-
-((lambda () '(orange walrus)))
-; expect (orange walrus)
-
-(lambda (x y z) (* x y z x x y z y x))
-; expect (lambda (x y z) (* x y z x x y z y x))
-
-(lambda (x) (* x x))
-; expect (lambda (x) (* x x))
-
-;Problem 9
-(define (f x) (* x 2))
-f
-; expect (lambda (x) (* x 2))
-
-(define (z x) (* x 2))
-z
-; expect (lambda (x) (* x 2))
-
-; Problem 10
-
-(define (make-adder n) (define (adder x) (+ n x)) adder)
-(define robots (make-adder 1750))
-(robots 9)
-; expect 1759
-
-(define (f x y) (+ (* x x) (* y y)))
-(f 2 5)
-; expect 29
-
-; Problem 11
-
-(lambda (x 0) 123412352)
-; expect Error: Atleast one parameter is a number
-
-(define (f nil) 3)
-; expect Error: nil is not valid parameter expression
-
-(lambda (nil) 123412352)
-; expect Error: nil is not valid parameter expression
-
-(define (f x 0) 3)
-; expect Error: Atleast one parameter is a number
-
-
-
-
 
 ;;; These are examples from several sections of "The Structure
 ;;; and Interpretation of Computer Programs" by Abelson and Sussman.
