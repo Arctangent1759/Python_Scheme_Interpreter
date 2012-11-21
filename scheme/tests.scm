@@ -6,7 +6,170 @@
 ;;;
 ;;; after the last test you wish to run.
 
-;;; *** Add more of your own here! ***
+;;;Problem 4
+
++
+; expect <scheme_primitives.PrimitiveProcedure object at 0x2742d50>
+
+(+ 2 5)
+; expect 7
+
+(* 3 4 (- 5 2) 1)
+; expect 36
+    
+(odd? 32)
+; expect False
+
+(/ 4 2)
+; expect 2
+
+
+
+;;;Problem 5
+(define x 15)
+(define y (* 3 x))
+y
+;expect 45
+
+(+ y (* y 2) 1)
+;expect 91
+
+(define x 50)
+x
+;expect 50
+
+
+
+;;;Problem 6
+
+'hellopeeps
+;expect hellopeeps
+
+'(1 . 3)
+;expect (1 . 3)
+
+'(1 (4 three . (4 . 5)))
+;expect (1 (4 three 4 . 5))
+
+(car '(c b))
+;expect c
+
+(eval (cons 'car '('(1 2))))
+;expect 1
+
+
+;;;Problem 7
+
+(begin (+ 2 3) (+ 5 6))
+;expect 11
+
+(begin (display 3) (newline) (+ 2 3))
+;expect 3
+;expect 5
+
+;;;Problem 8
+(lambda (x z) (+ x y))
+;expect (lambda (x z) (+ x y))
+
+((lambda (y) 42 (* y 2)) 5)
+;expect 10
+
+(lambda (y) 42 (* y 2))
+;(lambda (y) (begin 42 (* y 2)))
+
+;;;Problem 9
+(define (square x) (* x x))
+square
+;expect(lambda (x) (* x x))
+
+;;;Problem 10
+
+
+
+;;;Problem 11
+
+
+
+
+;;;Problem 12
+
+
+
+
+;;;Problem 13
+(if (= 4 4) true false)
+;expect True
+
+(if (= 4 4) (* 1 2) (+ 3 4))
+;expect 2
+
+
+;;;Problem 14
+(and)
+;expect True
+
+(or)
+;expect False
+
+(and 4 5 8)
+;expect 8 
+
+(or 9 2 1)
+;expect 9
+
+(and #t #f 42 (/ 1 0))
+;expect False
+
+(or 4 #t (/ 1 0))
+;expect 4
+
+
+
+;;;Problem 15
+
+(cond ((= 4 3) 'nope)
+              ((= 4 4) 'hi)
+              (else 'wait))
+;expect hi
+
+(cond ((= 4 3) 'wat)
+              ((= 4 4))
+              (else 'hm))
+;expect True
+
+(cond ((= 4 4) 'here 42)
+              (else 'wat 0))
+;expect 42
+  
+
+;;;Problem 16
+(define x 'hi)
+(define y 'bye)
+(let ((x 42)
+          (y (* 5 10)))
+      (list x y))
+;expect (42 50)
+
+(list x y)
+;expect (hi bye)
+
+
+
+;;;Problem 17
+
+(define f (mu (x) (+ x y)))
+(define g (lambda (x y) (f (+ x x))))
+(g 3 7)
+;expect 13
+
+;;;Problem 18
+(merge '(1 4 6) '(2 5 8))
+
+;expect (1 2 4 5 6 8)
+
+
+
+
 
 ;;; These are examples from several sections of "The Structure
 ;;; and Interpretation of Computer Programs" by Abelson and Sussman.
