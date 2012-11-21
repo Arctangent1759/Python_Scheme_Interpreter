@@ -429,6 +429,16 @@ def check_formals(formals):
 
     if not scheme_listp(formals):
         raise SchemeError("Badly formed expression")
+    
+    for i in scheme_list_to_list(formals):
+        if type(i)==float or type(i)==int:
+            raise SchemeError("Atleast one parameter is a number")
+        if type(i)==bool:
+            raise SchemeError("Atleast one parameter is a number")
+        if i==nil:
+            raise SchemeError("nil is not valid parameter expression") 
+
+
     if len(set(scheme_list_to_list(formals)))!=len(scheme_list_to_list(formals)):
         raise SchemeError("Parameters were repeated")
     return
