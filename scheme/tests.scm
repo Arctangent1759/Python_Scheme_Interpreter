@@ -600,8 +600,14 @@ one-through-four
 ;; The number of ways to partition TOTAL, where
 ;; each partition must be at most MAX-VALUE
 (define (count-partitions total max-value)
-  ; *** YOUR CODE HERE ***
-  nil)
+  
+  (cond 
+  ((equal? total 0) 1) 
+  ((< total max-value) (= max-value total))
+  ((equal? max-value 1) 1)
+  ((>= total max-value) (+ (count-partitions (- total max-value) max-value) (count-partitions total (- max-value 1))))
+  ((2) (count-partitions total (- max-value 1)))
+  ))
 
 (count-partitions 5 3)
 ; expect 5
