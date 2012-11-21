@@ -88,7 +88,7 @@ def apply_primitive(procedure, args, env):
     try:
         return procedure.fn(*pyargs)
     except TypeError:
-        raise SchemeError('TypeError encountered in apply_primitive.')#TODO: Add an informative error message.
+        raise SchemeError('TypeError encountered in apply_primitive.')
     
 ################
 # Environments #
@@ -137,7 +137,7 @@ class Frame(object):
             if self.parent:#Otherwise, if the frame has a parent, lookup in the parent.
                 return self.parent.lookup(symbol)
             else:#Otherwise, the frame is the global frame, and the symbol cannt be found. Raise an error.
-                raise SchemeError('Cannot find symbol '+str(symbol)) #TODO: Add an informative error message.
+                raise SchemeError('Cannot find symbol '+str(symbol))
         raise SchemeError("unknown identifier: {0}".format(str(symbol)))
 
     def global_frame(self):
@@ -329,7 +329,7 @@ def do_if_form(vals, env):
 def do_and_form(vals, env):
     """Evaluate short-circuited and with parameters VALS in environment ENV."""
     for i in vals:
-        if scheme_false(scheme_eval(i,env)):#TODO: Shouldn't this be scheme_false(scheme_eval(i,env))?
+        if scheme_false(scheme_eval(i,env)):
             return False
     if len(vals)==0:
         return True
@@ -339,11 +339,11 @@ def do_and_form(vals, env):
 def do_or_form(vals, env):
     """Evaluate short-circuited or with parameters VALS in environment ENV."""
     for i in vals:
-        if scheme_true(scheme_eval(i,env)):#TODO: Shouldn't this be scheme_false?
+        if scheme_true(scheme_eval(i,env)):
             return scheme_eval(i,env)
     return False    
 
-def do_cond_form(vals, env):#TODO: Check after implementation of quotation evaulation
+def do_cond_form(vals, env):
     """Evaluate cond form with parameters VALS in environment ENV.
     #Generously provided by an outside contributor.
     >>> env = create_global_frame()
@@ -378,7 +378,7 @@ def do_begin_form(vals, env):
     while curr!=nil:
         ret=curr.first if curr.second==nil else scheme_eval(curr.first,env)
         curr=curr.second
-    return ret #TODO: Check after completion of part 6B.
+    return ret 
 
 LOGIC_FORMS = {
         "and": do_and_form,
