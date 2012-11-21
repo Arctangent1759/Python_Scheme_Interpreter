@@ -431,7 +431,6 @@ def check_formals(formals):
         raise SchemeError("Badly formed expression")
     if len(set(scheme_list_to_list(formals)))!=len(scheme_list_to_list(formals)):
         raise SchemeError("Parameters were repeated")
-    
     return
 
 
