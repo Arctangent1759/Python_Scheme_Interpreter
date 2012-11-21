@@ -848,6 +848,8 @@ one-through-four
 
 ;; A list of all ways to partition TOTAL, where  each partition must
 ;; be at most MAX-VALUE and there are at most MAX-PIECES partitions.
+
+
 (define (list-partitions total max-pieces max-value)
   (define (gpart_loop i max_i parts total)
     (if (= i max_i)
@@ -872,9 +874,9 @@ one-through-four
     )
 )
 
-(define (floordiv x y) (/(- x (remainder x y)) y))
+(define (floordiv x y) (/(- x (remainder x y)) y)) ;floor division like python
 
-(define (gpart total)
+(define (gpart total) ;
     (if (= total 1)
         nil
         (gpart_loop 1 (+ (floordiv total 2) 1) nil total)
@@ -1024,7 +1026,7 @@ max-value)
         '((5 1 1) (4 2 1) (3 3 1) (3 2 2) (5 2) (4 3)))
 ; expect True
 ;(compare-lists (list-partitions 10 10 10) '((10) (9 1) (8 2) (7 3) (6 4) (5 5) (4 4 2) (4 3 3) (5 3 2) (5 4 1) (6 2 2) (6 3 1) (7 2 1) (8 1 1) (7 1 1 1) (6 2 1 1) (6 1 1 1 1) (5 3 1 1) (5 2 2 1) (5 2 1 1 1) (5 1 1 1 1 1) (4 4 1 1)  (4 3 2 1) (4 3 1 1 1) (4 2 2 2) (4 2 2 1 1) (4 2 1 1 1 1) (4 1 1 1 1 1 1) (3 3 3 1) (3 3 2 2) (3 3 2 1 1) (3 3 1 1 1 1) (3 2 2 2 1) (3 2 2 1 1 1) (3 2 1 1 1 1 1) (3 1 1 1 1 1 1 1) (2 2 2 2 2) (2 2 2 2 1 1) (2 2 2 1 1 1 1) (2 2 1 1 1 1 1 1) (2 1 1 1 1 1 1 1 1) (1 1 1 1 1 1 1 1 1 1)))
-; enxpect True
+; expect True
 
 ; Draw the hax image using turtle graphics.
 (define (hax n k)
