@@ -107,7 +107,19 @@ z
 (define (f x 0) 3)
 ; expect Error: Atleast one parameter is a number
 
+; Problem 12
 
+(define (derivative f x dx) (/ (- (f (+ x dx)) (f x)) dx))
+(define (quad x) (* (* x x) 2))
+(derivative quad 2 .0001)
+; expect 8.000200000015667
+
+(define (derivative-fcn f dx) (lambda (x) (/ (- (f (+ x dx)) (f x)) dx)))
+((derivative-fcn quad) 2)
+; expect Error: Parameter lengths do not match.
+
+((derivative-fcn quad .0001) 2)
+; expect 8.000200000015667
 
 
 
