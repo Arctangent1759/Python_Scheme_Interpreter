@@ -119,6 +119,24 @@ def scheme_read(src):
     Pair('quote', Pair('hello', nil))
     >>> print(read_line("(car '(1 2))"))
     (car (quote (1 2)))
+    >>> print(read_line("'42"))
+    (quote 42)
+    >>> print(read_line("'(1 2 3)"))
+    (quote (1 2 3))
+    >>> print(read_line("nil"))
+    ()
+    >>> print(read_line("'nil"))
+    (quote ())
+    >>> read_line("')")
+    Traceback (most recent call last):
+    ...
+    SyntaxError: unexpected token: )
+    >>> read_line("'.")
+    Traceback (most recent call last):
+    ...
+    SyntaxError: unexpected token: .
+    >>> read_line("'(5 '(3 2))")
+    Pair('quote', Pair(Pair(5, Pair(Pair('quote', Pair(Pair(3, Pair(2, nil)), nil)), nil)), nil))
     """
     if src.current() is None:
         raise EOFError
@@ -153,6 +171,28 @@ def read_tail(src):
     SyntaxError: Expected one element after .
     >>> scheme_read(Buffer(tokenize_lines(["(1", "2 .", "'(3 4))", "4"])))
     Pair(1, Pair(2, Pair('quote', Pair(Pair(3, Pair(4, nil)), nil))))
+    >>> print(read_line('(1 2 3 . nil)'))
+    (1 2 3)
+    >>> print(read_line('(1 (2 3) (4 (5)))'))
+    (1 (2 3) (4 (5)))
+    >>> print(read_line('(1 (9 8) . 7)'))
+    (1 (9 8) . 7)
+    >>> print(read_line('(1 . (2 . (3 . 4)))'))
+    (1 2 3 . 4)
+    >>> print(read_line('(hi there . (cs . (student)))'))
+    (hi there cs student)
+    >>> read_line("(. . 3)")
+    Traceback (most recent call last):
+    ...
+    SyntaxError: unexpected token: .
+    >>> read_line("(1 2 . 3") #An EOFError is also acceptable here
+    Traceback (most recent call last):
+    ...
+    SyntaxError: Expected one element after .
+    >>> read_line("(3 .")
+    Traceback (most recent call last):
+    ...
+    EOFError
     """
     if src.current() is None:
         raise SyntaxError("unexpected end of file")

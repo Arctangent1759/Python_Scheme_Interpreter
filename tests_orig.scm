@@ -601,8 +601,8 @@ one-through-four
 (count-change 20 us-coins 18)
 ; expect 8
 
-;(count-change 100 us-coins 100)
-;; expect 292
+(count-change 100 us-coins 100)
+; expect 292
 (count-change 0 us-coins 1)
 ; expect 1
 (count-change 20 us-coins 100)
@@ -639,10 +639,10 @@ one-through-four
 ; expect 5
 ; Note: The 5 partitions are [[3 2] [3 1 1] [2 2 1] [2 1 1 1] [1 1 1 1 1]]
 
-;(count-partitions 63 4)
-;; expect 2178
-;(count-partitions 100 3)
-;; expect 884
+(count-partitions 63 4)
+; expect 2178
+(count-partitions 100 3)
+; expect 884
 (count-partitions 10 10)
 ; expect 42
 
@@ -876,6 +876,7 @@ max-value)
 ;;; Extra credit ;;;
 ;;;;;;;;;;;;;;;;;;;;
 
+(exit)
 
 ; Tail call optimization test
 (define (sum n total)
