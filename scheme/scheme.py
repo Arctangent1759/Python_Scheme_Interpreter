@@ -434,7 +434,7 @@ def check_formals(formals):
         if type(i)==float or type(i)==int:
             raise SchemeError("Atleast one parameter is a number")
         if type(i)==bool:
-            raise SchemeError("Atleast one parameter is a number")
+            raise SchemeError("Atleast one parameter is a bool")
         if i==nil:
             raise SchemeError("nil is not valid parameter expression") 
 

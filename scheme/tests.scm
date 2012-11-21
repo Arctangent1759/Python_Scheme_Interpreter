@@ -6,8 +6,22 @@
 ;;;
 ;;; after the last test you wish to run.
 
-;;;Problem 4
 
+
+; Problem 3
+
+(+ 1 2)
+; expect 3
+
+(append (list 1 2 3 4 5) (list 6 7 8 9 10))
+; expect (1 2 3 4 5 6 7 8 9 10)
+
+(integer? 4.3)
+; expect False
+
+
+
+;;;Problem 4
 +
 ; expect <scheme_primitives.PrimitiveProcedure object at 0x2742d50>
 
@@ -29,50 +43,51 @@
 (define x 15)
 (define y (* 3 x))
 y
-;expect 45
+; expect 45
 
 (+ y (* y 2) 1)
-;expect 91
+; expect 91
 
-(define x 50)
-x
-;expect 50
-
+(define a 5)
+(define b 7)
+(define c (+ a b))
+c
+; expect 12
 
 
 ;;;Problem 6
 
 'hellopeeps
-;expect hellopeeps
+; expect hellopeeps
 
 '(1 . 3)
-;expect (1 . 3)
+; expect (1 . 3)
 
 '(1 (4 three . (4 . 5)))
-;expect (1 (4 three 4 . 5))
+; expect (1 (4 three 4 . 5))
 
 (car '(c b))
-;expect c
+; expect c
 
-(eval (cons 'car '('(1 2))))
-;expect 1
+'(orange walrus)
+; expect (orange walrus)
 
 
 ;;;Problem 7
 
 (begin (+ 2 3) (+ 5 6))
-;expect 11
+; expect 11
 
 (begin (display 3) (newline) (+ 2 3))
-;expect 3
-;expect 5
+; expect 3
+; expect 5
 
 ;;;Problem 8
 (lambda (x z) (+ x y))
-;expect (lambda (x z) (+ x y))
+; expect (lambda (x z) (+ x y))
 
 ((lambda (y) 42 (* y 2)) 5)
-;expect 10
+; expect 10
 
 (lambda (y) 42 (* y 2))
 ;(lambda (y) (begin 42 (* y 2)))
@@ -80,48 +95,59 @@ x
 ;;;Problem 9
 (define (square x) (* x x))
 square
-;expect(lambda (x) (* x x))
+; expect(lambda (x) (* x x))
 
 ;;;Problem 10
 
-
+;no tests
 
 ;;;Problem 11
 
+(define (bad x x) (* x x))
+; expect SchemeError
+
+(lambda (0 w zebra) w)
+; expect Error: Atleast one parameter is a number
+
+(lambda (x y nil) x)
+; expect Error: nil is not valid parameter expression
+
+(lambda (y #f nil) y)
+; expect Error: Atleast one parameter is a bool
 
 
 
 ;;;Problem 12
 
-
+;no tests
 
 
 ;;;Problem 13
 (if (= 4 4) true false)
-;expect True
+; expect True
 
 (if (= 4 4) (* 1 2) (+ 3 4))
-;expect 2
+; expect 2
 
 
 ;;;Problem 14
 (and)
-;expect True
+; expect True
 
 (or)
-;expect False
+; expect False
 
 (and 4 5 8)
-;expect 8 
+; expect 8 
 
 (or 9 2 1)
-;expect 9
+; expect 9
 
 (and #t #f 42 (/ 1 0))
-;expect False
+; expect False
 
 (or 4 #t (/ 1 0))
-;expect 4
+; expect 4
 
 
 
@@ -130,16 +156,16 @@ square
 (cond ((= 4 3) 'nope)
               ((= 4 4) 'hi)
               (else 'wait))
-;expect hi
+; expect hi
 
 (cond ((= 4 3) 'wat)
               ((= 4 4))
               (else 'hm))
-;expect True
+; expect True
 
 (cond ((= 4 4) 'here 42)
               (else 'wat 0))
-;expect 42
+; expect 42
   
 
 ;;;Problem 16
@@ -148,10 +174,10 @@ square
 (let ((x 42)
           (y (* 5 10)))
       (list x y))
-;expect (42 50)
+; expect (42 50)
 
 (list x y)
-;expect (hi bye)
+; expect (hi bye)
 
 
 
@@ -160,115 +186,13 @@ square
 (define f (mu (x) (+ x y)))
 (define g (lambda (x y) (f (+ x x))))
 (g 3 7)
-;expect 13
+; expect 13
 
 ;;;Problem 18
 (merge '(1 4 6) '(2 5 8))
 
-;expect (1 2 4 5 6 8)
+; expect (1 2 4 5 6 8)
 
-
-
-
-
-; Problem 3
-
-(+ 1 2)
-; expect 3
-
-(append (list 1 2 3 4 5) (list 6 7 8 9 10))
-; expect (1 2 3 4 5 6 7 8 9 10)
-
-(integer? 4.3)
-; expect False
-
-; Problem 4
-
-(define x 5)
-(define y 6)
-(+ x y)
-; expect 11
-
-(define z x)
-x
-; expect 5
-
-; Problem 5
-
-(define x 4)
-(define aadvark 'tomato)
-(cons x (cons aadvark nil))
-; expect (4 tomato)
-
-(define a 5)
-(define b 7)
-(define c (+ a b))
-c
-; expect 12
-
-; Problem 6
-
-(list 'a 'toast 'to 'not 'being 'on 'fire.)
-; expect (a toast to not being on fire.)
-
-'(cons (+ 1 2) (- 1 (fib 7)))
-; expect (cons (+ 1 2) (- 1 (fib 7)))
-
-'(orange walrus)
-; expect (orange walrus)
-
-;Problem 7
-
-(begin 30 'hello)
-; expect hello
-
-(begin (define x 18005555555) (define y 1759) (define x (* y x)) x)
-; expect 31671772221245
-
-;Problem 8
-
-((lambda () '(orange walrus)))
-; expect (orange walrus)
-
-(lambda (x y z) (* x y z x x y z y x))
-; expect (lambda (x y z) (* x y z x x y z y x))
-
-(lambda (x) (* x x))
-; expect (lambda (x) (* x x))
-
-;Problem 9
-(define (f x) (* x 2))
-f
-; expect (lambda (x) (* x 2))
-
-(define (z x) (* x 2))
-z
-; expect (lambda (x) (* x 2))
-
-; Problem 10
-
-(define (make-adder n) (define (adder x) (+ n x)) adder)
-(define robots (make-adder 1750))
-(robots 9)
-; expect 1759
-
-(define (f x y) (+ (* x x) (* y y)))
-(f 2 5)
-; expect 29
-
-; Problem 11
-
-(lambda (x 0) 123412352)
-; expect Error: Atleast one parameter is a number
-
-(define (f nil) 3)
-; expect Error: nil is not valid parameter expression
-
-(lambda (nil) 123412352)
-; expect Error: nil is not valid parameter expression
-
-(define (f x 0) 3)
-; expect Error: Atleast one parameter is a number
 
 
 
