@@ -1,7 +1,12 @@
+
+
 (define (tree d n a)
 	(if (= n 1)
 		(begin
 			(fd d)
+			(cond ((< a 22) (color 'green)) ((< a 38)(color 'red)) (else (color 'yellow)))
+			(circle 3)
+			(color 'white)
 			(penup)
 			(fd (- d))
 			(pendown)
@@ -19,6 +24,7 @@
 		)
 	)
 )
+;72 symbols
 
 (define (fib n)
 	(define (helpy prev curr n)
@@ -29,14 +35,16 @@
 	)
 	(helpy 0 1 n)
 )
+;25 symbols
 
 (define (random lbound upbound seed)
 	(+ lbound (remainder (* (fib seed) seed seed) (- upbound lbound)))
 )
+;16 symbols
 
 (define (forest ntrees d n a seed)
 	(if (= ntrees 0)
-		'done
+		nil
 		(begin
 			(define voffset (random -20 20 seed))  
 			(tree  (random 20 d seed) n (random 20 a seed))
@@ -49,12 +57,16 @@
 		)
 	)
 )
+;55 symbols
+
 (define (repeat k fn)
 	(if (> k 0)
 		(begin (fn) (repeat (- k 1) fn))
-		'done
+		nil
 	)
 )
+;16 symbols
+
 (define (inverse-appolonian-gasket r n)
 	(if (= n 1)
 		(circle r)
@@ -70,27 +82,27 @@
 		)
 	)
 )
+;24 symbols
 (speed 0)
+(begin_fill)
+(goto 1000 0)
+(circle 2000)
+(end_fill)
 (penup)
-(rt -90)
-(fd 400)
-(rt -90)
-(fd 250)
-(rt 90)
+(goto -400 -250)
 (pendown)
+(color 'white)
+(rt -90)
 (fd -150)
 (rt 90)
-(forest 9 100 7 45 10)
+(forest 9 100 6 45 10)
 (rt 90)
 (fd 100)
 (penup)
-(fd -150)
-(rt -90)
-(fd 360)
+(goto 200 200)
 (pendown)
+(color 'yellow)
 (inverse-appolonian-gasket 35 5)
-(inverse-appolonian-gasket -35 5)
-(circle 35 60)
-(inverse-appolonian-gasket -35 5)
 (ht)
 (exitonclick)
+;44 Symbols

@@ -388,7 +388,8 @@ def tscheme_color(c):
     """Set the color to C, a symbol such as red or '#ffc0c0' (representing
     hexadecimal red, green, and blue values."""
     _tscheme_prep()
-    check_type(c, Symbol, 0, "color")
+    #check_type(c, Symbol, 0, "color")
+    check_type(c, scheme_symbolp, 0, "color")
     turtle.color(str(c))
 
 @primitive("begin_fill")

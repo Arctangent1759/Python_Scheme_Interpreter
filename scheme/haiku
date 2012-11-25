@@ -1,3 +1,3 @@
-def haiku (a_poem):
-	len(a_poem) is 17
+def haiku (some_text):
+	len(some_text) is 17
 	return 'Three short words.'
