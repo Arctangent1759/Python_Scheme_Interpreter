@@ -111,9 +111,9 @@
 	(goto 200 200)
 	(pendown)
 	(color 'yellow)
+	(rt 40)
 	(inverse-appolonian-gasket 35 5)
 	(ht)
-	(exitonclick)
 	;43 Symbols
   (exitonclick))
 
